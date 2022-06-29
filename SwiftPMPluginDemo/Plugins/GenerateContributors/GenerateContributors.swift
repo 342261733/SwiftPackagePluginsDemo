@@ -17,7 +17,11 @@ struct GenerateContributors: CommandPlugin {
         let outputData = outputPipe.fileHandleForReading.readDataToEndOfFile()
         let output = String(decoding: outputData, as: UTF8.self)
         
-        print("semyon: >>>>>>>>>>>>>>>>>")
+        print("GenerateContributors invoke")
+        Diagnostics.emit(Diagnostics.Severity.error, "Diagnostics: GenerateContributors emit error")
+        Diagnostics.error("Diagnostics: GenerateContributors error")
+        Diagnostics.warning("Diagnostics: GenerateContributors warning")
+        Diagnostics.remark("Diagnostics: GenerateContributors remark")
         
         let contributors = Set(output.components(separatedBy: CharacterSet.newlines)).sorted().filter { !$0.isEmpty }
         try contributors.joined(separator: "\n").write(toFile: "CONTRIBUTORS.txt", atomically: true, encoding: .utf8)

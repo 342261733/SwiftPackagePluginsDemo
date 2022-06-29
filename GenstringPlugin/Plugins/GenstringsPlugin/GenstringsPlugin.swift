@@ -20,6 +20,10 @@ struct GenstringsPlugin: BuildToolPlugin {
         let inputFiles = swiftSourceFiles.map(\.path)
         
         print("GenstringsPlugin invoke")
+        Diagnostics.emit(Diagnostics.Severity.error, "Diagnostics: GenstringsPlugin emit error")
+        Diagnostics.error("Diagnostics: GenstringsPlugin error")
+        Diagnostics.warning("Diagnostics: GenstringsPlugin warning")
+        Diagnostics.remark("Diagnostics: GenstringsPlugin remark")
         
         return [
             .prebuildCommand(displayName: "Generating Iocalized strings from source files", executable: .init("/usr/bin/xcrun"), arguments: ["genstrings", "-SwiftUI", "-o", localizationDirectoryPath] + inputFiles, outputFilesDirectory: localizationDirectoryPath)
