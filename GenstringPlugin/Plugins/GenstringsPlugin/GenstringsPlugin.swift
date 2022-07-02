@@ -18,15 +18,20 @@ struct GenstringsPlugin: BuildToolPlugin {
         
         let swiftSourceFiles = target.sourceFiles(withSuffix: ".swift")
         let inputFiles = swiftSourceFiles.map(\.path)
-        
+        print("swift file: \(swiftSourceFiles), inputfile: \(inputFiles)")
         print("GenstringsPlugin invoke")
-        Diagnostics.emit(Diagnostics.Severity.error, "Diagnostics: GenstringsPlugin emit error")
-        Diagnostics.error("Diagnostics: GenstringsPlugin error")
-        Diagnostics.warning("Diagnostics: GenstringsPlugin warning")
-        Diagnostics.remark("Diagnostics: GenstringsPlugin remark")
+//        Diagnostics.emit(Diagnostics.Severity.error, "Diagnostics: GenstringsPlugin emit error")
+//        Diagnostics.error("Diagnostics: GenstringsPlugin error")
+//        Diagnostics.warning("Diagnostics: GenstringsPlugin warning")
+//        Diagnostics.remark("Diagnostics: GenstringsPlugin remark")
+        
+        let gitLogPath = context.pluginWorkDirectory.appending(subpath: "gstlog.txt")
+//        try FileManager.default.createFile(atPath: gitLogPath.string, contents: nil)
         
         return [
-            .prebuildCommand(displayName: "Generating Iocalized strings from source files", executable: .init("/usr/bin/xcrun"), arguments: ["genstrings", "-SwiftUI", "-o", localizationDirectoryPath] + inputFiles, outputFilesDirectory: localizationDirectoryPath)
+            .prebuildCommand(displayName: "Generating Iocalized strings from source files", executable: .init("/usr/bin/xcrun"), arguments: ["genstrings", "-SwiftUI", "-o", localizationDirectoryPath] + inputFiles, outputFilesDirectory: localizationDirectoryPath),
+//            .prebuildCommand(displayName: "build command git status", executable: .init( "/usr/bin/sh"), arguments: ["ls"], outputFilesDirectory: localizationDirectoryPath)
+            .buildCommand(displayName: "build command git status", executable: .init( "/usr/bin/git"), arguments: ["status"], outputFiles: [gitLogPath])
         ]
     }
 }

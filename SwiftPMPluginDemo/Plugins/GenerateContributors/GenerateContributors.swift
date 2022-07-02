@@ -1,6 +1,7 @@
 
 import Foundation
 import PackagePlugin
+//import Alamofire
 // 友情其实：需要运行此 Demo 需要先有 git 提交记录。
 @main
 struct GenerateContributors: CommandPlugin {
@@ -25,5 +26,9 @@ struct GenerateContributors: CommandPlugin {
         
         let contributors = Set(output.components(separatedBy: CharacterSet.newlines)).sorted().filter { !$0.isEmpty }
         try contributors.joined(separator: "\n").write(toFile: "CONTRIBUTORS.txt", atomically: true, encoding: .utf8)
+        
+//        AF.request("https://www.baidu.com").response { response in
+//            print(response)
+//        }
     }
 }
